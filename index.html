@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ziteng Wang</title>
+<meta name="description" content="Ziteng Wang: vision and multimodal learning research at NYU.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  /* Two typefaces: a serif for reading (name, bio, titles), a mono for structure (labels, links, venues, dates). */
+  :root {
+    --bg: #ffffff; --fg: #1d1f23; --muted: #626872; --line: #e6e8eb;
+    --link: #2563eb; --thumb-bg: #f4f5f7;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121417; --fg: #e7e9ec; --muted: #9aa1ab; --line: #2a2e34;
+      --link: #6ea8ff; --thumb-bg: #1b1e22;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121417; --fg: #e7e9ec; --muted: #9aa1ab; --line: #2a2e34;
+    --link: #6ea8ff; --thumb-bg: #1b1e22;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; padding: 0 16px; background: var(--bg); color: var(--fg);
+    font-family: var(--serif); font-size: 17px; line-height: 1.6;
+  }
+  main { max-width: 740px; margin: 0 auto; padding: 48px 0 64px; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  .theme-toggle {
+    position: fixed; top: 16px; right: 16px; font-family: var(--mono); font-size: 13px;
+    background: none; border: 1px solid var(--line); color: var(--muted);
+    border-radius: 6px; padding: 4px 9px; cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--fg); }
+
+  header { display: flex; gap: 32px; align-items: center; }
+  header .intro { flex: 1; min-width: 0; }
+  h1 { font-weight: 600; font-size: 40px; line-height: 1.1; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .role { font-family: var(--mono); font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+  .links { font-family: var(--mono); font-size: 13px; margin: 0; }
+  .links a { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .links svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .links svg.fill { fill: currentColor; stroke: none; }
+  .links a + a::before { content: "·"; color: var(--muted); margin: 0 9px; display: inline-block; }
+  .photo { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; flex: none; }
+
+  .bio { margin-top: 24px; }
+  .bio p { margin: 0 0 14px; }
+
+  h2 {
+    font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+    margin: 44px 0 20px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+  }
+  .note { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: -10px 0 22px; }
+
+  .pub { display: grid; grid-template-columns: 160px 1fr; gap: 21px; margin-bottom: 28px; }
+  .thumb {
+    width: 160px; aspect-ratio: 16 / 10; border-radius: 6px; overflow: hidden;
+    background: var(--thumb-bg); border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb img.contain { object-fit: contain; background: #fff; padding: 4px; }
+  .no-thumb { width: 160px; }
+  .thumb span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .pub .title { font-weight: 600; font-size: 17.5px; line-height: 1.35; display: block; margin-bottom: 4px; color: var(--fg); }
+  .pub .title:hover { color: var(--link); }
+  .authors { font-size: 14.5px; color: var(--muted); margin: 0 0 4px; }
+  .authors b { color: var(--fg); font-weight: 600; }
+  .venue { font-family: var(--mono); font-size: 12.5px; margin: 0 0 6px; }
+  .venue .tag { color: var(--link); }
+  .summary { font-size: 15px; margin: 0 0 6px; }
+  .plinks { font-family: var(--mono); font-size: 12.5px; }
+  .plinks a + a::before { content: "/"; color: var(--muted); margin: 0 8px; display: inline-block; }
+
+  footer { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 56px; }
+
+  @media (max-width: 600px) {
+    main { padding-top: 64px; }
+    header { flex-direction: column-reverse; align-items: flex-start; gap: 18px; }
+    .photo { width: 96px; height: 96px; }
+    h1 { font-size: 30px; }
+    .pub { grid-template-columns: 1fr; gap: 10px; }
+    .links { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+    .links a + a::before { display: none; }
+    .thumb { width: 100%; max-width: 360px; }
+    .no-thumb { display: none; }
+  }
+</style>
+<script>
+  // Follow the system by default; the button overrides it for this browser only.
+  (function () {
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  })();
+</script>
+<!-- Visit counts (GoatCounter, no cookies). Dashboard: https://zitengwangnyu.goatcounter.com -->
+<script data-goatcounter="https://zitengwangnyu.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">theme</button>
+<main>
+
+<header>
+  <div class="intro">
+    <h1>Ziteng Wang</h1>
+    <p class="role">M.S. Data Science · New York University</p>
+    <p class="links">
+      <a href="mailto:zw2526@nyu.edu"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>email</a>
+      <a href="cv.pdf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>cv</a>
+      <a href="https://scholar.google.com/citations?user=TGVM-SYAAAAJ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4L2 9l10 5 10-5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>scholar</a>
+      <a href="https://github.com/ZitengWangNYU"><svg viewBox="0 0 24 24" aria-hidden="true" class="fill"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>github</a>
+      <a href="https://www.linkedin.com/in/ziteng-wang-694b8b227"><svg viewBox="0 0 24 24" aria-hidden="true" class="fill"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.1c0-1.22-.02-2.79-1.7-2.79-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg>linkedin</a>
+    </p>
+  </div>
+  <img class="photo" src="assets/photo.jpg" alt="Ziteng Wang">
+</header>
+
+<!-- DRAFT bio: restrained background paragraph + one-line research interests (decided 11/16). Wording to be confirmed by Austin. -->
+<section class="bio">
+  <p>I am a Master's student in Data Science at New York University, working with
+    Prof. <a href="https://www.sainingxie.com/">Saining Xie</a> at NYU Courant.
+    Previously, I worked with Prof. <a href="https://med.nyu.edu/faculty/zhe-s-chen">Zhe Sage Chen</a> at NYU Langone on EEG biomarkers of chronic pain.
+    I received my B.A. in Computer Science from NYU in 2024.</p>
+  <p>My research interests lie in computer vision and multimodal learning, with a focus on visual representation learning, world models, and visual agents that learn from interaction.</p>
+</section>
+
+<h2>Publications</h2>
+<p class="note">* equal contribution</p>
+
+<div class="pub">
+  <a class="thumb" href="https://rae-dit.github.io/scale-rae/"><img class="contain" src="assets/scale-rae.webp" alt="Scaling RAE: decoder training and unified model training"></a>
+  <div>
+    <a class="title" href="https://arxiv.org/abs/2601.16208">Scaling Text-to-Image Diffusion Transformers with Representation Autoencoders</a>
+    <p class="authors">Shengbang Tong*, Boyang Zheng*, <b>Ziteng Wang*</b>, Bingda Tang, Nanye Ma, Ellis Brown, Jihan Yang, Rob Fergus, Yann LeCun, Saining Xie</p>
+    <p class="venue">CVPR 2026 Findings</p>
+    <p class="summary">Scales representation autoencoders to open-ended text-to-image generation and compares them with VAE latents across model and data scales.</p>
+    <p class="plinks"><a href="https://arxiv.org/abs/2601.16208">paper</a><a href="https://rae-dit.github.io/scale-rae/">project</a><a href="https://github.com/ZitengWangNYU/Scale-RAE">code</a></p>
+  </div>
+</div>
+
+<div class="pub">
+  <a class="thumb" href="https://cambrian-mllm.github.io/cambrian-1/"><img src="assets/cambrian-1.jpg" alt="Cambrian-1"></a>
+  <div>
+    <a class="title" href="https://arxiv.org/abs/2406.16860">Cambrian-1: A Fully Open, Vision-Centric Exploration of Multimodal LLMs</a>
+    <p class="authors">Shengbang Tong*, Ellis Brown*, Penghao Wu*, Sanghyun Woo, Manoj Middepogu, Sai Charitha Akula, Jihan Yang, Shusheng Yang, Adithya Iyer, Xichen Pan, <b>Ziteng Wang</b>, Rob Fergus, Yann LeCun, Saining Xie</p>
+    <p class="venue">NeurIPS 2024 · <span class="tag">Oral</span></p>
+    <p class="summary">A vision-centric study of multimodal LLMs: how the choice of vision encoder, connector and data shapes what the model can see.</p>
+    <p class="plinks"><a href="https://arxiv.org/abs/2406.16860">paper</a><a href="https://cambrian-mllm.github.io/cambrian-1/">project</a><a href="https://github.com/cambrian-mllm/cambrian">code</a></p>
+  </div>
+</div>
+
+<div class="pub">
+  <div class="no-thumb" aria-hidden="true"></div>
+  <div>
+    <span class="title">Generalizable Electroencephalographic Biomarkers of Chronic Back Pain through Nested Feature Optimization</span>
+    <p class="authors">Yifan Liu, <b>Ziteng Wang</b>, …, Zhe Sage Chen</p>
+    <!-- Submitted to Science on 2026-02-24 (manuscript aeg6543, Gmail); no decision or publication found. Confirm with Sage. -->
+    <p class="venue">Manuscript, 2026</p>
+    <p class="summary">Resting-state EEG features that separate chronic back pain patients from healthy controls.</p>
+  </div>
+</div>
+
+<footer>Last updated November 2026</footer>
+</main>
+
+<script>
+  (function () {
+    var btn = document.getElementById("themeToggle");
+    function current() {
+      var set = document.documentElement.getAttribute("data-theme");
+      if (set) return set;
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    function label() { btn.textContent = current() === "dark" ? "light" : "dark"; }
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+      label();
+    });
+    label();
+  })();
+</script>
+</body>
+</html>
